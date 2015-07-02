@@ -1,0 +1,76 @@
+18.3. stdout to screen
+
+The simple way to redirect a standard output ( stdout ) is to simply use any command, because by default stdout is automatically redirected to screen. First create a file "file1":
+
+$ touch file1
+$ ls file1 
+file1
+
+As you can see from the example above execution of ls command produces STDOUT which by default is redirected to screen.
+18.4. stdout to file
+
+The override the default behavior of STDOUT we can use ">" to redirect this output to file:
+
+$ ls file1 > STDOUT
+$ cat STDOUT 
+file1
+
+18.5. stderr to file
+
+By default STDERR is displayed on the screen:
+
+$ ls
+file1  STDOUT
+$ ls file2
+ls: cannot access file2: No such file or directory
+
+In the following example we will redirect the standard error ( stderr ) to a file and stdout to a screen as default. Please note that STDOUT is displayed on the screen, however STDERR is redirected to a file called STDERR:
+
+$ ls
+file1  STDOUT
+$ ls file1 file2 2> STDERR
+file1
+$ cat STDERR 
+ls: cannot access file2: No such file or directory
+
+18.6. stdout to stderr
+
+It is also possible to redirect STDOUT and STDERR to the same file. In the next example we will redirect STDOUT to the same descriptor as STDERR. Both STDOUT and STDERR will be redirected to file "STDERR_STDOUT".
+
+$ ls
+file1  STDERR  STDOUT
+$ ls file1 file2 2> STDERR_STDOUT 1>&2
+$ cat STDERR_STDOUT
+ls: cannot access file2: No such file or directory
+file1
+
+File STDERR_STDOUT now contains STDOUT and STDERR.
+18.7. stderr to stdout
+
+The above example can be reversed by redirecting STDERR to the same descriptor as SDTOUT:
+
+$ ls
+file1  STDERR  STDOUT
+$ ls file1 file2 > STDERR_STDOUT 2>&1
+$ cat STDERR_STDOUT 
+ls: cannot access file2: No such file or directory
+file1
+
+18.8. stderr and stdout to file
+
+Previous two examples redirected both STDOUT and STDERR to a file. Another way to achieve the same effect is illustrated below:
+
+$ ls
+file1  STDERR  STDOUT
+$ ls file1 file2 &> STDERR_STDOUT
+$ cat STDERR_STDOUT 
+ls: cannot access file2: No such file or directory
+file1
+
+or
+
+ls file1 file2 >& STDERR_STDOUT
+$ cat STDERR_STDOUT 
+ls: cannot access file2: No such file or directory
+file1
+

@@ -1,0 +1,5 @@
+#!/bin/bash
+# use backticks " ``" to execute shell command
+echo `uname -o`
+# executing bash command with out backticks
+echo uname -o
